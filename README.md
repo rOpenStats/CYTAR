@@ -165,15 +165,69 @@ opendata From Ministerio de Ciencia de la Nación Argentina
     #> [23] "apellido"                            
     #> [24] "cvar_ultimo_acceso"
 
+    library(dplyr)
+    #> 
+    #> Attaching package: 'dplyr'
+    #> The following objects are masked from 'package:stats':
+    #> 
+    #>     filter, lag
+    #> The following objects are masked from 'package:base':
+    #> 
+    #>     intersect, setdiff, setequal, union
+    library(readr)
+
     producciones <- CYTARProducciones$new()
     self <- producciones
     producciones$configAll()
+    #> <CYTARProducciones>
+    #>   Public:
+    #>     clone: function (deep = FALSE) 
+    #>     configAll: function () 
+    #>     getProduccionesPersonas: function (personas.df, add.persona.info = TRUE) 
+    #>     initialize: function () 
+    #>     loadAll: function () 
+    #>     logger: Logger, Filterable, R6
+    #>     producciones.years: list
+    #>     producciones.years.url: list
+    #>     producto.autor.years: list
+    #>     producto.autor.years.url: list
+    #>     producto.persona.funcion: NA
     producciones$loadAll()
-    #> INFO  [14:03:38.102] Processing producciones {year: 2011, filename: producciones_2011.csv, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6..}
-    #> INFO  [14:03:39.494] Processing producciones {year: 2012, filename: producciones_2012.csv, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6..}
-    #> INFO  [14:03:41.264] Processing producciones {year: 2013, filename: producciones_2013.csv, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6..}
-    #> INFO  [14:03:42.779] Processing producciones {year: 2014, filename: producciones_2014.csv, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6..}
-    #> INFO  [14:03:43.979] Processing producciones {year: 2015, filename: producciones_2015.csv, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6..}
-    #> INFO  [14:03:44.832] Processing producciones {year: 2017, filename: producciones_2017.csv, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6..}
-    #> INFO  [14:03:45.822] Processing producciones {year: 2018, filename: producciones_2018.csv, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6..}
+    #> INFO  [17:43:08.337] Processing producciones {year: 2011, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/749f0b9d-5f51-4cb1-b2b4-35..}
+    #> Warning: 6 parsing failures.
+    #>    row         col   expected            actual                                  file
+    #>  51116 NA          6 columns  2 columns         '~/.R/CYTAR//producto_autor_2011.csv'
+    #>  51117 producto_id an integer GORDON, ARIEL     '~/.R/CYTAR//producto_autor_2011.csv'
+    #>  51117 NA          6 columns  5 columns         '~/.R/CYTAR//producto_autor_2011.csv'
+    #> 113183 NA          6 columns  2 columns         '~/.R/CYTAR//producto_autor_2011.csv'
+    #> 113184 producto_id an integer JOSÉ A. MAIZTEGUI '~/.R/CYTAR//producto_autor_2011.csv'
+    #> ...... ........... .......... ................. .....................................
+    #> See problems(...) for more details.
+    #> INFO  [17:43:12.324] Processing producciones {year: 2012, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/306efae2-ff42-4b2c-abca-cd..}
+    #> INFO  [17:43:16.218] Processing producciones {year: 2013, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/15fdec11-12e4-4a7d-bf33-4b..}
+    #> INFO  [17:43:20.047] Processing producciones {year: 2014, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/190f6b01-6bfc-4a01-8b7c-dc..}
+    #> INFO  [17:43:23.700] Processing producciones {year: 2015, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/479eb76c-1f4a-409e-9d53-5c..}
+    #> INFO  [17:43:27.203] Processing producciones {year: 2017, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/be663208-1b91-461c-a015-f2..}
+    #> INFO  [17:43:28.735] Processing producciones {year: 2018, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/439f3533-a2fe-4ef9-8996-97..}
     #> NULL
+    names(producciones$producciones.years)
+    #> [1] "2011" "2012" "2013" "2014" "2015" "2017" "2018"
+
+    personas.selected <- personas$data %>% filter(grepl("kornblihtt", apellido, ignore.case = TRUE))
+    personas.selected
+    #> # A tibble: 3 x 6
+    #>   persona_id nombre          apellido   sexo_id  edad cvar_ultimo_acceso
+    #>        <dbl> <chr>           <chr>        <dbl> <dbl> <date>            
+    #> 1      17759 ALBERTO RODOLFO KORNBLIHTT       2    65 2019-03-18        
+    #> 2      23135 JUAN            KORNBLIHTT       2    39 2018-09-07        
+    #> 3      26145 LAURA INÉS      KORNBLIHTT       1    65 2017-03-21
+    producciones.personas <- producciones$getProduccionesPersonas(personas.df = personas.selected)
+    #> INFO  [17:43:32.912] Searching {current.year: 2011, found: 10}
+    #> INFO  [17:43:32.927] Searching {current.year: 2012, found: 5}
+    #> INFO  [17:43:32.941] Searching {current.year: 2013, found: 11}
+    #> INFO  [17:43:32.952] Searching {current.year: 2014, found: 11}
+    #> INFO  [17:43:32.964] Searching {current.year: 2015, found: 10}
+    #> INFO  [17:43:33.000] Searching {current.year: 2017, found: 3}
+    #> INFO  [17:43:33.011] Searching {current.year: 2018, found: 0}
+
+    write_csv(producciones.personas, file = file.path(getDataDir(), "producciones_kornblihtt.csv"))

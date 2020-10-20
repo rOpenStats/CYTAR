@@ -172,7 +172,6 @@ CYTARProducciones <- R6Class("CYTARProducciones",
 
       logger$info("Processing producciones",
                   year     = current.year,
-                  filename = producciones.filename,
                   url      = producciones.url)
       # self$producciones.years[[current.year]] <- CYTARDatasource$new(data.url = producciones.url,
       #                                                        data.filename = producciones.filename,

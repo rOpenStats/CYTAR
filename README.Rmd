@@ -96,7 +96,15 @@ names(producciones$producciones.years)
 
 personas.selected <- personas$data %>% filter(grepl("kornblihtt", apellido, ignore.case = TRUE))
 personas.selected
-producciones.personas <- producciones$getProduccionesPersonas(personas.id = personas.selected)
+producciones.personas <- producciones$getProduccionesPersonas(personas.df = personas.selected)
 
 write_csv(producciones.personas, file = file.path(getDataDir(), "producciones_kornblihtt.csv"))
+
+producciones.personas %>%
+ group_by(persona_id, nombre, apellido, edad) %>%
+ summarize( min_anio = min(anio_publica, na.rm = TRUE),
+            max_anio = max(anio_publica, na.rm = TRUE),
+            n        = n()
+            )
+
 ```
