@@ -30,4 +30,6 @@ Imports: R6,
 Collate:
         'util.R'
         'cytar.R'
+        'cytar-personas.R'
+        'cytar-producciones.R'
 RoxygenNote: 7.1.1

@@ -1,0 +1,54 @@
+#' CYTARPersonas2018
+#' @author kenarab
+#' @importFrom R6 R6Class
+#' @import dplyr
+#' @import magrittr
+#' @import testthat
+#' @export
+CYTARProducciones <- R6Class("CYTARProducciones",
+  public = list(
+   producciones.years.url = NA,
+   producciones.years     = NA,
+   logger                 = NA,
+   initialize = function(){
+    self$producciones.years.url <- list()
+    self$producciones.years     <- list()
+    self$logger <- genLogger(self)
+    self
+   },
+   configAll = function(){
+    self$producciones.years.url[["2011"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/749f0b9d-5f51-4cb1-b2b4-35910fd04439/download/producto_2011.csv"
+    self$producciones.years.url[["2012"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/306efae2-ff42-4b2c-abca-cd9651e72376/download/producto_2012.csv"
+    self$producciones.years.url[["2013"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/15fdec11-12e4-4a7d-bf33-4b0b6d2943c4/download/producto_2013.csv"
+    self$producciones.years.url[["2014"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/190f6b01-6bfc-4a01-8b7c-dc6bdfface52/download/producto_2014.csv"
+    self$producciones.years.url[["2015"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/479eb76c-1f4a-409e-9d53-5cb862b6389d/download/producto_2015.csv"
+    #self$producciones.years.url[["2016"]] <- ""
+    self$producciones.years.url[["2017"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/be663208-1b91-461c-a015-f2b300b484ea/download/producto_2017.csv"
+    self$producciones.years.url[["2018"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/439f3533-a2fe-4ef9-8996-977de5192f26/download/producto_2018.csv"
+   },
+   loadAll = function(){
+    logger <- getLogger(self)
+    for (cy in names(self$producciones.years.url)){
+      producciones.url       <- self$producciones.years.url[[cy]]
+      producciones.filename  <- paste("producciones_", cy, ".csv", sep ="")
+      producciones.col.types <- cols(
+                                  producto_id = col_integer(),
+                                  tipo_produccion_id = col_integer(),
+                                  idioma_id = col_integer(),
+                                  anio_publica = col_integer(),
+                                  titulo = col_character(),
+                                  resumen = col_character(),
+                                  palabras_clave = col_character()
+                                 )
+      logger$info("Processing producciones",
+                  year     = cy,
+                  filename = producciones.filename,
+                  url      = producciones.url)
+      self$producciones.years[[year]] <- CYTARDatasource$new(data.url = producciones.url,
+                                                             data.filename = producciones.filename,
+                                                             col.types = producciones.col.types)
+      self$producciones.years[[year]]$loadData()
+    }
+    self$data
+   }))
+
