@@ -1,9 +1,10 @@
-#' CYTARPersonas2018
+#' current.yearTARPersonas2018
 #' @author kenarab
 #' @importFrom R6 R6Class
 #' @import dplyr
 #' @import magrittr
 #' @import testthat
+#' @import lgr
 #' @export
 CYTARProducciones <- R6Class("CYTARProducciones",
   public = list(
@@ -28,9 +29,9 @@ CYTARProducciones <- R6Class("CYTARProducciones",
    },
    loadAll = function(){
     logger <- getLogger(self)
-    for (cy in names(self$producciones.years.url)){
-      producciones.url       <- self$producciones.years.url[[cy]]
-      producciones.filename  <- paste("producciones_", cy, ".csv", sep ="")
+    for (current.year in names(self$producciones.years.url)){
+      producciones.url       <- self$producciones.years.url[[current.year]]
+      producciones.filename  <- paste("producciones_", current.year, ".csv", sep ="")
       producciones.col.types <- cols(
                                   producto_id = col_integer(),
                                   tipo_produccion_id = col_integer(),
@@ -41,13 +42,13 @@ CYTARProducciones <- R6Class("CYTARProducciones",
                                   palabras_clave = col_character()
                                  )
       logger$info("Processing producciones",
-                  year     = cy,
+                  year     = current.year,
                   filename = producciones.filename,
                   url      = producciones.url)
-      self$producciones.years[[year]] <- CYTARDatasource$new(data.url = producciones.url,
+      self$producciones.years[[current.year]] <- CYTARDatasource$new(data.url = producciones.url,
                                                              data.filename = producciones.filename,
                                                              col.types = producciones.col.types)
-      self$producciones.years[[year]]$loadData()
+      self$producciones.years[[current.year]]$loadData()
     }
     self$data
    }))

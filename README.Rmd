@@ -50,6 +50,7 @@ CYTAR_data_dir = "~/.R/CYTAR/"
 ```{r, library}
 library(CYTAR)
 library(ggplot2)
+library(lgr)
 ```
 
 
@@ -65,9 +66,25 @@ lgr::get_logger("root")$add_appender(AppenderFile$new(log.file))
 lgr::threshold("info", lgr::get_logger("root"))
 lgr::threshold("info", lgr::get_logger("CYTARPersonal"))
 
-# Data from
-# http://datos.salud.gob.ar/dataset/covid-19-casos-registrados-en-la-republica-argentina
-personal <- CYTARPersonal$new()
-personal$download()
+
+personas <- CYTARPersonas$new()
+self <- personas
+personas$loadData()
+nrow(personas$data)
+
+
+personas.2018 <- CYTARPersonas2018$new()
+self <- personas.2018
+personas.2018$loadData()
+nrow(personas.2018$data)
+personas.2018$consolidate()
+nrow(personas.2018$consolidated)
+names(personas.2018$consolidated)
+
+producciones <- CYTARProducciones$new()
+self <- producciones
+producciones$configAll()
+producciones$loadAll()
+
 
 ```
