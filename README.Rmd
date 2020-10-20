@@ -86,6 +86,8 @@ names(personas.2018$consolidated)
 ```
 ```{r, producciones}
 library(dplyr)
+library(readr)
+
 producciones <- CYTARProducciones$new()
 self <- producciones
 producciones$configAll()
