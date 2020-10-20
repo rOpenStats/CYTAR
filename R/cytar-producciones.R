@@ -190,9 +190,10 @@ CYTARProducciones <- R6Class("CYTARProducciones",
     self$producto.persona.funcion$loadData()
     self$data
    },
-   getProduccionesPersonas = function(personas.id){
+   getProduccionesPersonas = function(personas.df, add.persona.info = TRUE){
      logger <- getLogger(self)
-     productos.personas.selected <- self$producto.persona.funcion$data %>% filter(persona_id %in% personas.id)
+     stopifnot(inherits(personas.df, "data.frame"))
+     productos.personas.selected <- self$producto.persona.funcion$data %>% filter(persona_id %in% personas.df$persona_id)
      ret <- NULL
      for (current.year in names(self$producciones.years)){
       producciones.current.year <- self$producciones.years[[current.year]]
@@ -200,6 +201,12 @@ CYTARProducciones <- R6Class("CYTARProducciones",
       logger$info("Searching", current.year =  current.year,
                   found = nrow(producciones.current))
       ret <- rbind(ret, producciones.current)
+     }
+     if (add.persona.info){
+      ret.personas <- personas.df %>% left_join(productos.personas.selected, by = "persona_id")
+      ret.personas %<>% left_join(ret, by = "producto_id")
+      ret.personas %<>% arrange(persona_id, anio_publica, producto_id)
+      ret <- ret.personas
      }
      ret
    }))

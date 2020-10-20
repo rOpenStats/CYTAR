@@ -53,7 +53,7 @@ kenarab
 \if{latex}{\out{\hypertarget{method-getProduccionesPersonas}{}}}
 \subsection{Method \code{getProduccionesPersonas()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CYTARProducciones$getProduccionesPersonas(personas.id)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CYTARProducciones$getProduccionesPersonas(personas, add.persona.info = TRUE)}\if{html}{\out{</div>}}
 }
 
 }

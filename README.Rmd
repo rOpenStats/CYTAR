@@ -96,7 +96,7 @@ names(producciones$producciones.years)
 
 personas.selected <- personas$data %>% filter(grepl("kornblihtt", apellido, ignore.case = TRUE))
 personas.selected
-producciones.personas <- producciones$getProduccionesPersonas(personas.id = personas.selected$persona_id)
+producciones.personas <- producciones$getProduccionesPersonas(personas.id = personas.selected)
 
 write_csv(producciones.personas, file = file.path(getDataDir(), "producciones_kornblihtt.csv"))
 ```
