@@ -25,7 +25,7 @@ CYTARDatasource <- R6Class("CYTARDatasource",
     self
    },
    loadData = function(){
-    data.dir <- getEnv("data_dir")
+    data.dir <- getDataDir()
     data.path <- file.path(data.dir, self$data.filename)
     if (!file.exists(data.path)){
      dir.create(data.dir, showWarnings = FALSE, recursive = TRUE)

@@ -19,6 +19,13 @@ getEnv <- function(variable.name, package.prefix = getPackagePrefix(),  fail.on.
  ret
 }
 
+#' getDataDir
+#' @author kenarab
+#' @export
+getDataDir = function(){
+  getEnv("data_dir")
+}
+
 #' getPackagePrefix
 #' @author kenarab
 #' @export

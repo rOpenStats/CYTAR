@@ -17,6 +17,7 @@ kenarab
 \item \href{#method-new}{\code{CYTARProducciones$new()}}
 \item \href{#method-configAll}{\code{CYTARProducciones$configAll()}}
 \item \href{#method-loadAll}{\code{CYTARProducciones$loadAll()}}
+\item \href{#method-getProduccionesPersonas}{\code{CYTARProducciones$getProduccionesPersonas()}}
 \item \href{#method-clone}{\code{CYTARProducciones$clone()}}
 }
 }
@@ -44,6 +45,15 @@ kenarab
 \subsection{Method \code{loadAll()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CYTARProducciones$loadAll()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-getProduccionesPersonas"></a>}}
+\if{latex}{\out{\hypertarget{method-getProduccionesPersonas}{}}}
+\subsection{Method \code{getProduccionesPersonas()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CYTARProducciones$getProduccionesPersonas(personas.id)}\if{html}{\out{</div>}}
 }
 
 }
