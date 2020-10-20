@@ -1,0 +1,33 @@
+Package: CYTAR
+Type: Package
+Title: Analytics over Sistema Ciencia y Tecnología de Argentina
+Version: 0.1.0
+Authors@R: c(
+    person("Alejandro", "Baranek",,"abaranek@dc.uba.ar", c("aut","com","cre", "cph"))
+    )
+Maintainer: Alejandro Baranek <abaranek@dc.uba.ar>
+Description: 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Suggests:
+         testthat
+Depends: R (>= 3.6)
+Imports: R6,
+         dplyr,
+         knitr,
+         magrittr,
+         lgr,
+         ggplot2,
+         readr,
+         readxl,
+         checkmate,
+         RColorBrewer,
+         reshape2,
+         httr,
+         jsonlite,
+         TTR
+Collate:
+        'util.R'
+        'cytar.R'
+RoxygenNote: 7.1.1

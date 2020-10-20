@@ -1,0 +1,73 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  dpi=200,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+
+
+# CYTAR
+
+A package for analysing Argentina's Science and technology system (CYT)
+
+ <!-- . -->
+
+
+
+
+# Package
+
+
+
+# How to get started (Development version)
+
+Install the R package using the following commands on the R console:
+
+```R
+# install.packages("devtools")
+devtools::install()
+```
+
+# How to use it
+
+First add variable with your preferred configurations in `~/.Renviron`. 
+ 
+
+```.Renviron
+CYTAR_data_dir = "~/.R/CYTAR/"
+```
+
+```{r, library}
+library(CYTAR)
+library(ggplot2)
+```
+
+
+# CYTAR analytics over people and researchs
+
+opendata From Ministerio de Ciencia de la Nación Argentina
+
+```{r, }
+log.dir <- file.path(getEnv("data_dir"), "logs")
+dir.create(log.dir, recursive = TRUE, showWarnings = FALSE)
+log.file <- file.path(log.dir, "cytar.log")
+lgr::get_logger("root")$add_appender(AppenderFile$new(log.file))
+lgr::threshold("info", lgr::get_logger("root"))
+lgr::threshold("info", lgr::get_logger("CYTARPersonal"))
+
+# Data from
+# http://datos.salud.gob.ar/dataset/covid-19-casos-registrados-en-la-republica-argentina
+personal <- CYTARPersonal$new()
+personal$download()
+
+```
