@@ -12,14 +12,16 @@ CYTARDatasource <- R6Class("CYTARDatasource",
    data.url                = NA,
    data.filename           = NA,
    col.types               = NA,
-   data                    = NA,
    #state
+   data                    = NA,
+   logger                  = NA,
    initialize = function(data.url, data.filename, col.types,
                          delim = ";"){
     self$data.url      <- data.url
     self$data.filename <- data.filename
     self$col.types     <- col.types
     self$delim         <- delim
+    self$logger        <- genLogger(self)
     self
    },
    loadData = function(){

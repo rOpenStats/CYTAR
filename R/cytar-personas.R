@@ -11,7 +11,7 @@ CYTARPersonas <- R6Class("CYTARPersonas",
   public = list(
   initialize = function(){
     super$initialize(data.url = "https://datasets.datos.mincyt.gob.ar/dataset/06ae9728-c376-47bd-9c41-fbdca68707c6/resource/8ab77b16-f1a8-4d3f-b664-67becf83a9b9/download/personas.csv",
-                     "personas.csv",
+                     data.filename = "personas.csv",
                      col.types = cols(
                       persona_id = col_double(),
                       nombre = col_character(),

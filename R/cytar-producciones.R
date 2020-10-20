@@ -1,3 +1,67 @@
+
+#' CYTARProduccionYear
+#' @author kenarab
+#' @importFrom R6 R6Class
+#' @import dplyr
+#' @import magrittr
+#' @import testthat
+#' @export
+CYTARProduccionYear <- R6Class("CYTARProduccionYear",
+  inherit = CYTARDatasource,
+  public = list(
+   publication.keywords = NULL,
+   initialize = function(data.url, year){
+    super$initialize(data.url      = data.url,
+                     data.filename = paste("producciones_", year, ".csv", sep =""),
+                     col.types     = cols(
+                      producto_id = col_integer(),
+                      tipo_produccion_id = col_integer(),
+                      idioma_id = col_integer(),
+                      anio_publica = col_integer(),
+                      titulo = col_character(),
+                      resumen = col_character(),
+                      palabras_clave = col_character()
+                     )
+                     )
+    self
+   },
+   loadData = function(){
+    super$loadData()
+    self$data$palabras_clave <-
+     tolower(self$data$palabras_clave)
+    self$data$titulo         <-
+     tolower(self$data$titulo)
+    self$data$resumen        <-
+     tolower(self$data$resumen)
+    #self$processKeywords()
+    self
+   },
+   processKeywords = function(){
+    logger <- getLogger(self)
+    nrow <- nrow(self$data)
+    freq.log <- round(nrow/100)
+    for (i in seq_len(nrow)){
+     current.publication <- self$data[i,]
+     current.keywords <- strsplit(current.publication$palabras_clave, split = "\\|")[[1]]
+     if (i %% freq.log == 0){
+      #debug
+      #print(names(current.publication))
+      logger$trace("Processing keywords", i = i, nrow = nrow, perc = paste(round(i/n * 100, 2), "%", sep =""),
+                   keywords = current.publication$palabras_clave)
+     }
+     publication.keywords <- NULL
+     for (keyword in current.keywords){
+      current.publication.keywords <- tibble(publication.id = current.publication$producto_id,
+                                                 keyword        = keyword,
+                                                 stringsAsFactors = FALSE)
+      publication.keywords <- rbind(publication.keywords, current.publication.keywords)
+     }
+     self$publication.keywords <- rbind(self$publication.keywords, publication.keywords)
+    }
+   }
+   ))
+
+
 #' current.yearTARPersonas2018
 #' @author kenarab
 #' @importFrom R6 R6Class
@@ -45,9 +109,11 @@ CYTARProducciones <- R6Class("CYTARProducciones",
                   year     = current.year,
                   filename = producciones.filename,
                   url      = producciones.url)
-      self$producciones.years[[current.year]] <- CYTARDatasource$new(data.url = producciones.url,
-                                                             data.filename = producciones.filename,
-                                                             col.types = producciones.col.types)
+      # self$producciones.years[[current.year]] <- CYTARDatasource$new(data.url = producciones.url,
+      #                                                        data.filename = producciones.filename,
+      #                                                        col.types = producciones.col.types)
+      self$producciones.years[[current.year]] <- CYTARProduccionYear$new(data.url = producciones.url,
+                                                                             year = current.year)
       self$producciones.years[[current.year]]$loadData()
     }
     self$data
