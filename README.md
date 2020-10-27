@@ -1,26 +1,22 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-CYTAR
-=====
+# CYTAR
 
 A package for analysing Argentina’s Science and technology system (CYT)
 
 <!-- . -->
 
-Package
-=======
+# Package
 
-How to get started (Development version)
-========================================
+# How to get started (Development version)
 
 Install the R package using the following commands on the R console:
 
     # install.packages("devtools")
     devtools::install()
 
-How to use it
-=============
+# How to use it
 
 First add variable with your preferred configurations in `~/.Renviron`.
 
@@ -43,8 +39,7 @@ First add variable with your preferred configurations in `~/.Renviron`.
     #> 
     #>     Layout
 
-CYTAR analytics over people and researchs
-=========================================
+# CYTAR analytics over people and researchs
 
 opendata From Ministerio de Ciencia de la Nación Argentina
 
@@ -193,7 +188,7 @@ opendata From Ministerio de Ciencia de la Nación Argentina
     #>     producto.autor.years.url: list
     #>     producto.persona.funcion: NA
     producciones$loadAll()
-    #> INFO  [17:43:08.337] Processing producciones {year: 2011, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/749f0b9d-5f51-4cb1-b2b4-35..}
+    #> INFO  [09:34:23.094] Processing producciones {year: 2011, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/749f0b9d-5f51-4cb1-b2b4-35910fd04439/download/producto_2011.csv}
     #> Warning: 6 parsing failures.
     #>    row         col   expected            actual                                  file
     #>  51116 NA          6 columns  2 columns         '~/.R/CYTAR//producto_autor_2011.csv'
@@ -203,12 +198,12 @@ opendata From Ministerio de Ciencia de la Nación Argentina
     #> 113184 producto_id an integer JOSÉ A. MAIZTEGUI '~/.R/CYTAR//producto_autor_2011.csv'
     #> ...... ........... .......... ................. .....................................
     #> See problems(...) for more details.
-    #> INFO  [17:43:12.324] Processing producciones {year: 2012, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/306efae2-ff42-4b2c-abca-cd..}
-    #> INFO  [17:43:16.218] Processing producciones {year: 2013, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/15fdec11-12e4-4a7d-bf33-4b..}
-    #> INFO  [17:43:20.047] Processing producciones {year: 2014, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/190f6b01-6bfc-4a01-8b7c-dc..}
-    #> INFO  [17:43:23.700] Processing producciones {year: 2015, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/479eb76c-1f4a-409e-9d53-5c..}
-    #> INFO  [17:43:27.203] Processing producciones {year: 2017, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/be663208-1b91-461c-a015-f2..}
-    #> INFO  [17:43:28.735] Processing producciones {year: 2018, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/439f3533-a2fe-4ef9-8996-97..}
+    #> INFO  [09:34:26.088] Processing producciones {year: 2012, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/306efae2-ff42-4b2c-abca-cd9651e72376/download/producto_2012.csv}
+    #> INFO  [09:34:29.147] Processing producciones {year: 2013, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/15fdec11-12e4-4a7d-bf33-4b0b6d2943c4/download/producto_2013.csv}
+    #> INFO  [09:34:32.226] Processing producciones {year: 2014, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/190f6b01-6bfc-4a01-8b7c-dc6bdfface52/download/producto_2014.csv}
+    #> INFO  [09:34:35.768] Processing producciones {year: 2015, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/479eb76c-1f4a-409e-9d53-5cb862b6389d/download/producto_2015.csv}
+    #> INFO  [09:34:38.643] Processing producciones {year: 2017, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/be663208-1b91-461c-a015-f2b300b484ea/download/producto_2017.csv}
+    #> INFO  [09:34:40.111] Processing producciones {year: 2018, url: https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/439f3533-a2fe-4ef9-8996-977de5192f26/download/producto_2018.csv}
     #> NULL
     names(producciones$producciones.years)
     #> [1] "2011" "2012" "2013" "2014" "2015" "2017" "2018"
@@ -222,12 +217,27 @@ opendata From Ministerio de Ciencia de la Nación Argentina
     #> 2      23135 JUAN            KORNBLIHTT       2    39 2018-09-07        
     #> 3      26145 LAURA INÉS      KORNBLIHTT       1    65 2017-03-21
     producciones.personas <- producciones$getProduccionesPersonas(personas.df = personas.selected)
-    #> INFO  [17:43:32.912] Searching {current.year: 2011, found: 10}
-    #> INFO  [17:43:32.927] Searching {current.year: 2012, found: 5}
-    #> INFO  [17:43:32.941] Searching {current.year: 2013, found: 11}
-    #> INFO  [17:43:32.952] Searching {current.year: 2014, found: 11}
-    #> INFO  [17:43:32.964] Searching {current.year: 2015, found: 10}
-    #> INFO  [17:43:33.000] Searching {current.year: 2017, found: 3}
-    #> INFO  [17:43:33.011] Searching {current.year: 2018, found: 0}
+    #> INFO  [09:34:42.697] Searching {current.year: 2011, found: 10}
+    #> INFO  [09:34:42.706] Searching {current.year: 2012, found: 5}
+    #> INFO  [09:34:42.713] Searching {current.year: 2013, found: 11}
+    #> INFO  [09:34:42.719] Searching {current.year: 2014, found: 11}
+    #> INFO  [09:34:42.725] Searching {current.year: 2015, found: 10}
+    #> INFO  [09:34:42.731] Searching {current.year: 2017, found: 3}
+    #> INFO  [09:34:42.736] Searching {current.year: 2018, found: 0}
 
     write_csv(producciones.personas, file = file.path(getDataDir(), "producciones_kornblihtt.csv"))
+
+    producciones.personas %>%
+     group_by(persona_id, nombre, apellido, edad) %>%
+     summarize( min_anio = min(anio_publica, na.rm = TRUE),
+                max_anio = max(anio_publica, na.rm = TRUE),
+                n        = n()
+                )
+    #> `summarise()` regrouping output by 'persona_id', 'nombre', 'apellido' (override with `.groups` argument)
+    #> # A tibble: 3 x 7
+    #> # Groups:   persona_id, nombre, apellido [3]
+    #>   persona_id nombre          apellido    edad min_anio max_anio     n
+    #>        <dbl> <chr>           <chr>      <dbl>    <int>    <int> <int>
+    #> 1      17759 ALBERTO RODOLFO KORNBLIHTT    65     2011     2017    33
+    #> 2      23135 JUAN            KORNBLIHTT    39     2011     2017    15
+    #> 3      26145 LAURA INÉS      KORNBLIHTT    65     2011     2015    11
