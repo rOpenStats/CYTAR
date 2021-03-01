@@ -37,6 +37,7 @@ CYTARProductoYear <- R6Class("CYTARProductoYear",
     self
    },
    processKeywords = function(){
+    # This approach is not feasible
     logger <- getLogger(self)
     nrow <- nrow(self$data)
     freq.log <- round(nrow/100)
@@ -143,28 +144,43 @@ CYTARProducciones <- R6Class("CYTARProducciones",
     self$logger <- genLogger(self)
     self
    },
-   configAll = function(){
-    self$producciones.years.url[["2011"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/749f0b9d-5f51-4cb1-b2b4-35910fd04439/download/producto_2011.csv"
-    self$producciones.years.url[["2012"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/306efae2-ff42-4b2c-abca-cd9651e72376/download/producto_2012.csv"
-    self$producciones.years.url[["2013"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/15fdec11-12e4-4a7d-bf33-4b0b6d2943c4/download/producto_2013.csv"
-    self$producciones.years.url[["2014"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/190f6b01-6bfc-4a01-8b7c-dc6bdfface52/download/producto_2014.csv"
-    self$producciones.years.url[["2015"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/479eb76c-1f4a-409e-9d53-5cb862b6389d/download/producto_2015.csv"
-    #FIXME 2016 el link está oculto y tiene los datos de 2015
-    #https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/479eb76c-1f4a-409e-9d53-5cb862b6389d/download/producto_2016.csv
-    #self$producciones.years.url[["2016"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/479eb76c-1f4a-409e-9d53-5cb862b6389d/download/producto_2016.csv"
-    self$producciones.years.url[["2017"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/be663208-1b91-461c-a015-f2b300b484ea/download/producto_2017.csv"
-    self$producciones.years.url[["2018"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/439f3533-a2fe-4ef9-8996-977de5192f26/download/producto_2018.csv"
+   configAll = function(years = NULL){
+     if("2011" %in% years | is.null(years)){
+       self$producciones.years.url[["2011"]]   <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/749f0b9d-5f51-4cb1-b2b4-35910fd04439/download/producto_2011.csv"
+       self$producto.autor.years.url[["2011"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/c6c5b25b-1565-4f23-a372-bc7e49172558/download/producto_autor_2011.csv"
+     }
+     if("2012" %in% years | is.null(years)){
+       self$producciones.years.url[["2012"]]   <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/306efae2-ff42-4b2c-abca-cd9651e72376/download/producto_2012.csv"
+       self$producto.autor.years.url[["2012"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/00e9b63d-89bc-4df9-8b9d-61c5c03d9343/download/producto_autor_2012.csv"
+     }
+     if("2013" %in% years | is.null(years)){
+       self$producciones.years.url[["2013"]]   <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/15fdec11-12e4-4a7d-bf33-4b0b6d2943c4/download/producto_2013.csv"
+       self$producto.autor.years.url[["2013"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/e87622d1-2931-42c3-bccc-929b0c634118/download/producto_autor_2013.csv"
+     }
+     if("2014" %in% years | is.null(years)){
+       self$producciones.years.url[["2014"]]   <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/190f6b01-6bfc-4a01-8b7c-dc6bdfface52/download/producto_2014.csv"
+       self$producto.autor.years.url[["2014"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/ed9ec403-e54c-438a-a8f5-89eb5dbb6658/download/producto_autor_2014.csv"
+     }
+     if("2015" %in% years | is.null(years)){
+       self$producciones.years.url[["2015"]]   <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/479eb76c-1f4a-409e-9d53-5cb862b6389d/download/producto_2015.csv"
+       self$producto.autor.years.url[["2015"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/5793d777-49fe-4e4d-b77c-944096582edd/download/producto_autor_2015.csv"
+     }
+     if("2016" %in% years | is.null(years)){
+       #FIXME 2016 el link está oculto y tiene los datos de 2015
+       #https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/479eb76c-1f4a-409e-9d53-5cb862b6389d/download/producto_2016.csv
+       #self$producciones.years.url[["2016"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/479eb76c-1f4a-409e-9d53-5cb862b6389d/download/producto_2016.csv"
+       self$producto.autor.years.url[["2016"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/22758256-4e24-4353-841a-1c080a8b72d4/download/producto_autor_2016.csv"
+     }
+     if("2017" %in% years | is.null(years)){
+       self$producciones.years.url[["2017"]]   <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/be663208-1b91-461c-a015-f2b300b484ea/download/producto_2017.csv"
+       self$producto.autor.years.url[["2017"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/a1637ed6-5aff-428d-be49-52121ac64e5a/download/producto_autor_2017.csv"
+     }
+     if("2018" %in% years | is.null(years)){
+       self$producciones.years.url[["2018"]]   <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/439f3533-a2fe-4ef9-8996-977de5192f26/download/producto_2018.csv"
+       self$producto.autor.years.url[["2018"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/9a49271f-5d1a-49b6-a678-b1f83ad55f77/download/producto_autor_2018.csv"
+     }
 
-    self$producto.autor.years.url[["2011"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/c6c5b25b-1565-4f23-a372-bc7e49172558/download/producto_autor_2011.csv"
-    self$producto.autor.years.url[["2012"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/00e9b63d-89bc-4df9-8b9d-61c5c03d9343/download/producto_autor_2012.csv"
-    self$producto.autor.years.url[["2013"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/e87622d1-2931-42c3-bccc-929b0c634118/download/producto_autor_2013.csv"
-    self$producto.autor.years.url[["2014"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/ed9ec403-e54c-438a-a8f5-89eb5dbb6658/download/producto_autor_2014.csv"
-    self$producto.autor.years.url[["2015"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/5793d777-49fe-4e4d-b77c-944096582edd/download/producto_autor_2015.csv"
-    self$producto.autor.years.url[["2016"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/22758256-4e24-4353-841a-1c080a8b72d4/download/producto_autor_2016.csv"
-    self$producto.autor.years.url[["2017"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/a1637ed6-5aff-428d-be49-52121ac64e5a/download/producto_autor_2017.csv"
-    self$producto.autor.years.url[["2018"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/4f823995-1a78-4f43-b6c8-89a32d61329f/resource/9a49271f-5d1a-49b6-a678-b1f83ad55f77/download/producto_autor_2018.csv"
-
-    self
+     self
    },
    loadAll = function(){
     logger <- getLogger(self)
@@ -210,5 +226,38 @@ CYTARProducciones <- R6Class("CYTARProducciones",
       ret <- ret.personas
      }
      ret
-   }))
+   },
+   search = function(regexp, search.fields = c("palabras_clave", "resumen", "titulo"),
+          years = NULL){
+     logger <- getLogger(self)
+     logger$info("Searching", regexp =  regexp,
+                 found = nrow(producciones.current))
+     ret <- NULL
+     all.years <- names(self$producciones.years)
+     if (!is.null(years)){
+       all.years <- intersect(all.years, years)
+     }
+     for (current.year in all.years){
+       producciones.current.year <- self$producciones.years[[current.year]]
+       #debug
+       #self.debug <<- self
+       #producciones.current.year <<- producciones.current.year
+       rows.all.cols <- NULL
+       search.fields <- intersect(search.fields, names(producciones.current.year$data))
+       producciones.current.year$data[, search.fields]
+       for (cc in search.fields){
+         logger$debug("Searching in", cc = cc)
+         rows.col <- grep(regexp, producciones.current.year$data[, cc], ignore.case = TRUE)
+         rows.all.cols <- unique(union(rows.all.cols, rows.col))
+       }
+       producciones.current <- producciones.current.year$data[rows.all.cols,]
+       #debug
+       print(current.year)
+       logger$info("Searching", current.year =  current.year,
+                   found = nrow(producciones.current))
+       ret <- rbind(ret, producciones.current)
+     }
+     ret
+   }
+  ))
 

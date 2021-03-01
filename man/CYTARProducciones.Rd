@@ -18,6 +18,7 @@ kenarab
 \item \href{#method-configAll}{\code{CYTARProducciones$configAll()}}
 \item \href{#method-loadAll}{\code{CYTARProducciones$loadAll()}}
 \item \href{#method-getProduccionesPersonas}{\code{CYTARProducciones$getProduccionesPersonas()}}
+\item \href{#method-search}{\code{CYTARProducciones$search()}}
 \item \href{#method-clone}{\code{CYTARProducciones$clone()}}
 }
 }
@@ -54,6 +55,19 @@ kenarab
 \subsection{Method \code{getProduccionesPersonas()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CYTARProducciones$getProduccionesPersonas(personas.df, add.persona.info = TRUE)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-search"></a>}}
+\if{latex}{\out{\hypertarget{method-search}{}}}
+\subsection{Method \code{search()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CYTARProducciones$search(
+  regexp,
+  fields = c("palabras_clave", "resumen", "titulo"),
+  years = NULL
+)}\if{html}{\out{</div>}}
 }
 
 }
