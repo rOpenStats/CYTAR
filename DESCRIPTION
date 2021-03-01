@@ -1,7 +1,7 @@
 Package: CYTAR
 Type: Package
 Title: Analytics over Sistema Ciencia y Tecnología de Argentina
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
     person("Alejandro", "Baranek",,"abaranek@dc.uba.ar", c("aut","com","cre", "cph"))
     )
@@ -15,6 +15,7 @@ Suggests:
 Depends: R (>= 3.6)
 Imports: R6,
          dplyr,
+         stringr,
          knitr,
          magrittr,
          lgr,

@@ -127,6 +127,7 @@ CYTARProductoPersonaFuncion <- R6Class("CYTARProductoPersonaFuncion",
 #' @import magrittr
 #' @import testthat
 #' @import lgr
+#' @import stringr
 #' @export
 CYTARProducciones <- R6Class("CYTARProducciones",
   public = list(
@@ -184,7 +185,7 @@ CYTARProducciones <- R6Class("CYTARProducciones",
    },
    loadAll = function(){
     logger <- getLogger(self)
-    for (current.year in names(self$producciones.years.url)){
+    for (current.year in sort(names(self$producciones.years.url))){
       producciones.url       <- self$producciones.years.url[[current.year]]
       producto.autor.url     <- self$producto.autor.years.url[[current.year]]
 
@@ -227,35 +228,40 @@ CYTARProducciones <- R6Class("CYTARProducciones",
      }
      ret
    },
-   search = function(regexp, search.fields = c("palabras_clave", "resumen", "titulo"),
-          years = NULL){
+   search = function(regexp,
+                     search.fields = c("palabras_clave", "resumen", "titulo"),
+                     years = NULL,
+                     negate = FALSE){
      logger <- getLogger(self)
      logger$info("Searching", regexp =  regexp,
-                 found = nrow(producciones.current))
+                 search.fields = paste(search.fields, collapse = ", "))
      ret <- NULL
      all.years <- names(self$producciones.years)
      if (!is.null(years)){
        all.years <- intersect(all.years, years)
      }
-     for (current.year in all.years){
+     for (current.year in sort(all.years)){
        producciones.current.year <- self$producciones.years[[current.year]]
+       #debug
+       rows.all.cols <- NULL
+       search.fields <- intersect(search.fields, names(producciones.current.year$data))
+       #producciones.current.year$data[, search.fields]
+
+       # for (cc in search.fields){
+       #   logger$debug("Searching in", cc = cc)
+       #   rows.col <- grep(regexp, as.character(producciones.current.year$data[, cc]), ignore.case = TRUE)
+       #   rows.all.cols <- unique(union(rows.all.cols, rows.col))
+       # }
        #debug
        #self.debug <<- self
        #producciones.current.year <<- producciones.current.year
-       rows.all.cols <- NULL
-       search.fields <- intersect(search.fields, names(producciones.current.year$data))
-       producciones.current.year$data[, search.fields]
-       for (cc in search.fields){
-         logger$debug("Searching in", cc = cc)
-         rows.col <- grep(regexp, producciones.current.year$data[, cc], ignore.case = TRUE)
-         rows.all.cols <- unique(union(rows.all.cols, rows.col))
-       }
-       producciones.current <- producciones.current.year$data[rows.all.cols,]
-       #debug
-       print(current.year)
+       #stop("Under construction")
+       producciones.detected <- producciones.current.year$data %>%
+         filter_at(vars(search.fields),
+         any_vars(str_detect(., pattern = regexp, negate=negate))                                           )
        logger$info("Searching", current.year =  current.year,
-                   found = nrow(producciones.current))
-       ret <- rbind(ret, producciones.current)
+                   found = nrow(producciones.detected))
+       ret <- rbind(ret, producciones.detected)
      }
      ret
    }

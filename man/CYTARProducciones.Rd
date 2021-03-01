@@ -36,7 +36,7 @@ kenarab
 \if{latex}{\out{\hypertarget{method-configAll}{}}}
 \subsection{Method \code{configAll()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CYTARProducciones$configAll()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CYTARProducciones$configAll(years = NULL)}\if{html}{\out{</div>}}
 }
 
 }
@@ -65,8 +65,9 @@ kenarab
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CYTARProducciones$search(
   regexp,
-  fields = c("palabras_clave", "resumen", "titulo"),
-  years = NULL
+  search.fields = c("palabras_clave", "resumen", "titulo"),
+  years = NULL,
+  negate = FALSE
 )}\if{html}{\out{</div>}}
 }
 
