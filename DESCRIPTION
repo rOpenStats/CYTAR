@@ -33,4 +33,5 @@ Collate:
         'cytar.R'
         'cytar-personas.R'
         'cytar-producciones.R'
+        'cytar-ref.R'
 RoxygenNote: 7.1.1

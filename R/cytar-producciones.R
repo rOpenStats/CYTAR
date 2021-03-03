@@ -135,6 +135,7 @@ CYTARProducciones <- R6Class("CYTARProducciones",
    producciones.years       = NA,
    producto.autor.years.url = NA,
    producto.autor.years     = NA,
+   personas.years           = NA,
    producto.persona.funcion = NA,
    logger                   = NA,
    initialize = function(){
@@ -185,6 +186,9 @@ CYTARProducciones <- R6Class("CYTARProducciones",
    },
    loadAll = function(){
     logger <- getLogger(self)
+    personas.anio.downloader <- CYTARPersonasAnioDownloader$new()
+    dummy <- personas.anio.downloader$configure()
+
     for (current.year in sort(names(self$producciones.years.url))){
       producciones.url       <- self$producciones.years.url[[current.year]]
       producto.autor.url     <- self$producto.autor.years.url[[current.year]]
@@ -202,6 +206,8 @@ CYTARProducciones <- R6Class("CYTARProducciones",
       self$producto.autor.years[[current.year]] <- CYTARProductoAutorYear$new(data.url = producto.autor.url,
                                                                        year = current.year)
       self$producto.autor.years[[current.year]]$loadData()
+
+      self$personas.years[[current.year]] <-personas.anio.downloader$generatePersonasyear(current.year)
 
     }
     self$producto.persona.funcion <- CYTARProductoPersonaFuncion$new()
