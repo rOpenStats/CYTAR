@@ -143,6 +143,7 @@ CYTARProducciones <- R6Class("CYTARProducciones",
     self$producciones.years       <- list()
     self$producto.autor.years.url <- list()
     self$producto.autor.years     <- list()
+    self$personas.years           <- list()
     self$logger <- genLogger(self)
     self
    },
