@@ -60,3 +60,21 @@ getLogger <- function(r6.object){
   }
   ret
 }
+
+#' removeAccents
+#' @author ken4rab
+#' @export
+removeAccents <- function(text){
+  #TODO stuff '
+  ret<-iconv(text, to='ASCII//TRANSLIT')
+  ret<-gsub("'|\\~","",ret)
+  ret
+}
+
+#' normalizeString
+#' @author ken4rab
+#' @export
+normalizeString <- function(text){
+  removeAccents(trimws(tolower(text)))
+}
+
