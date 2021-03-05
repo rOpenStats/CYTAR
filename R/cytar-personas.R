@@ -125,10 +125,6 @@ CYTARPersonasAnio <- R6Class("CYTARPersonasAnio",
      categorias.summary <- self$data %>%
         group_by(categoria_conicet_descripcion, tipo_personal_descripcion) %>%
         summarize(n = n()) %>% arrange(-n)
-
-     #debug
-     self.debug <<- self
-     stop("Under construction")
      names(self$data)
      self$data
    }))
