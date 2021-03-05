@@ -120,7 +120,7 @@ CYTARProductoPersonaFuncion <- R6Class("CYTARProductoPersonaFuncion",
   ))
 
 
-#' current.yearTARPersonas2018
+#' CYTARProducciones
 #' @author kenarab
 #' @importFrom R6 R6Class
 #' @import dplyr
@@ -235,6 +235,42 @@ CYTARProducciones <- R6Class("CYTARProducciones",
      }
      ret
    },
+   getPersonasArea = function(producciones.df){
+     logger <- getLogger(self)
+     stopifnot("producto_id" %in% names(producciones.df))
+     stopifnot("anio_publica" %in% names(producciones.df))
+     producciones.join.df <- producciones.df %>% select(producto_id, anio_publica)
+     productos.personas.selected <- self$producto.persona.funcion$data %>% filter(producto_id %in% producciones.df$producto_id)
+     phase.1.rows <- nrow(productos.personas.selected)
+     productos.personas.selected %<>% inner_join(producciones.join.df, by = "producto_id")
+     phase.2.rows <- nrow(productos.personas.selected)
+     if (phase.2.rows < phase.1.rows){
+       logger$info("Lost rows when joining productos personas",
+                   phase.1 = phase.1.rows, phase.2 = phase.2.rows)
+     }
+     all.years <- sort(unique(productos.personas.selected$anio_publica))
+     ret <- NULL
+     for (current.year in all.years){
+       current.year <- as.character(current.year)
+       if (current.year %in% names(self$personas.years)){
+         personas.year <- self$personas.years[[current.year]]$data
+         productos.personas.year <- productos.personas.selected %>% inner_join(personas.year,
+                                            by = c("persona_id", "anio_publica" = "anio"))
+         logger$info("Recovering personas from", year = current.year, nrow = nrow(productos.personas.year))
+         ret <- rbind(ret, productos.personas.year)
+       }
+     }
+     phase.3.rows <- nrow(productos.personas.selected)
+     if (phase.3.rows < phase.2.rows){
+       logger$info("Lost rows when joining personas anio",
+                   phase.2 = phase.2.rows, phase.3 = phase.3.rows)
+     }
+     else{
+       logger$info("Retrieved author information for",
+                   personas = phase.3.rows)
+     }
+     ret
+   },
    search = function(regexp,
                      search.fields = c("palabras_clave", "resumen", "titulo"),
                      years = NULL,
@@ -270,6 +306,9 @@ CYTARProducciones <- R6Class("CYTARProducciones",
                    found = nrow(producciones.detected))
        ret <- rbind(ret, producciones.detected)
      }
+     logger$info("Retrieved publications for",
+                 publications = nrow(ret))
+
      ret
    }
   ))
