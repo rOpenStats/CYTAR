@@ -81,9 +81,10 @@ CYTARPersonasAnio <- R6Class("CYTARPersonasAnio",
  inherit = CYTARDatasource,
  public = list(
    disciplinas.ref = NA,
+   categoria.conicet.ref = NA,
+   tipo.personal.ref = NA,
    initialize = function(year, data.url, disciplinas.ref){
      url.splitted <- strsplit(data.url, split = "/")[[1]]
-     self$disciplinas.ref <- disciplinas.ref
      super$initialize(data.url = data.url,
                       data.filename = url.splitted[length(url.splitted)],
                       col.types =
@@ -94,10 +95,22 @@ CYTARPersonasAnio <- R6Class("CYTARPersonasAnio",
                       )
      self
    },
+   configure = function(){
+      if (!self$configured){
+         self$disciplinas.ref <- CYTARDisciplinasRef$new()
+         self$tipo.personal.ref <- CYTARTipoPersonalRef$new()
+         self$categoria.conicet.ref <- CYTARCategoriaConicetRef$new()
+         self$disciplinas.ref$consolidate()
+         self$tipo.personal.ref$consolidate()
+         self$categoria.conicet.ref$consolidate()
+         self$configured <- TRUE
+      }
+   },
    checkConsolidatedFields = function(fields){
 
    },
    consolidate = function(){
+     self$configure()
      self$loadData()
      self.debug <<- self
      self$disciplinas.ref$data$disciplina_id
@@ -105,6 +118,17 @@ CYTARPersonasAnio <- R6Class("CYTARPersonasAnio",
      names(disciplina.experticia) <- gsub("disciplina_", "", names(disciplina.experticia))
      names(disciplina.experticia) <- paste("disciplina_experticia_", names(disciplina.experticia), sep = "")
      self$data %<>% left_join(disciplina.experticia, by = "disciplina_experticia_id")
+    names(self$data)
+     self$data %<>% left_join(self$tipo.personal.ref$data, by = "tipo_personal_id")
+     self$data %<>% left_join(self$categoria.conicet.ref$data, by = "categoria_conicet_id")
+
+     self$data %>%
+        group_by(categoria_conicet_descripcion, tipo_personal_descripcion) %>%
+        summarize(n = n) %>% arrange(-n)
+
+     #debug
+     self.debug <<- self
+     stop("Under construction")
      names(self$data)
      self$data
    }))
@@ -123,7 +147,6 @@ CYTARPersonasAnio <- R6Class("CYTARPersonasAnio",
 CYTARPersonasAnioDownloader <- R6Class("CYTARPersonasAnioDownloader",
    public = list(
      personas.year.url = NA,
-     disciplinas.ref = NA,
      initialize = function(){
        self$personas.year.url <- list()
        self
@@ -137,10 +160,6 @@ CYTARPersonasAnioDownloader <- R6Class("CYTARPersonasAnioDownloader",
        self$personas.year.url[["2016"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/06ae9728-c376-47bd-9c41-fbdca68707c6/resource/2fbdbf08-4de0-4a1b-92d5-d16751757ab8/download/personas_2016.csv"
        self$personas.year.url[["2017"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/06ae9728-c376-47bd-9c41-fbdca68707c6/resource/ff318872-775a-4403-bff5-a1c5cdeb85ea/download/personas_2017.csv"
        self$personas.year.url[["2018"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/06ae9728-c376-47bd-9c41-fbdca68707c6/resource/7b07fb44-64c3-4902-ab73-f59d4ed8a2f5/download/personas_2018.csv"
-
-       self$disciplinas.ref <- CYTARDisciplinasRef$new()
-       self$disciplinas.ref$consolidate()
-
      },
      generatePersonasyear = function(year){
        ret <- NULL
@@ -149,7 +168,7 @@ CYTARPersonasAnioDownloader <- R6Class("CYTARPersonasAnioDownloader",
          stop(paste("Año", year, "sin información disponible sobre personas CYTAR"))
        }
        else{
-         ret <- CYTARPersonasAnio$new(year, self$personas.year.url[[year]], disciplinas.ref = self$disciplinas.ref)
+         ret <- CYTARPersonasAnio$new(year, self$personas.year.url[[year]])
          ret$consolidate()
        }
        ret

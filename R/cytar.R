@@ -13,6 +13,7 @@ CYTARDatasource <- R6Class("CYTARDatasource",
    data.filename           = NA,
    col.types               = NA,
    #state
+   configured              = FALSE,
    data                    = NA,
    logger                  = NA,
    initialize = function(data.url, data.filename, col.types,
