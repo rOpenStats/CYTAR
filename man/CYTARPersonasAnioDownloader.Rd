@@ -16,7 +16,7 @@ kenarab
 \itemize{
 \item \href{#method-new}{\code{CYTARPersonasAnioDownloader$new()}}
 \item \href{#method-configure}{\code{CYTARPersonasAnioDownloader$configure()}}
-\item \href{#method-generatePersonasyear}{\code{CYTARPersonasAnioDownloader$generatePersonasyear()}}
+\item \href{#method-generatePersonasYear}{\code{CYTARPersonasAnioDownloader$generatePersonasYear()}}
 \item \href{#method-clone}{\code{CYTARPersonasAnioDownloader$clone()}}
 }
 }
@@ -39,11 +39,11 @@ kenarab
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-generatePersonasyear"></a>}}
-\if{latex}{\out{\hypertarget{method-generatePersonasyear}{}}}
-\subsection{Method \code{generatePersonasyear()}}{
+\if{html}{\out{<a id="method-generatePersonasYear"></a>}}
+\if{latex}{\out{\hypertarget{method-generatePersonasYear}{}}}
+\subsection{Method \code{generatePersonasYear()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CYTARPersonasAnioDownloader$generatePersonasyear(year)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CYTARPersonasAnioDownloader$generatePersonasYear(year)}\if{html}{\out{</div>}}
 }
 
 }

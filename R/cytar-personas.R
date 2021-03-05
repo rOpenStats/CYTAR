@@ -122,9 +122,9 @@ CYTARPersonasAnio <- R6Class("CYTARPersonasAnio",
      self$data %<>% left_join(self$tipo.personal.ref$data, by = "tipo_personal_id")
      self$data %<>% left_join(self$categoria.conicet.ref$data, by = "categoria_conicet_id")
 
-     self$data %>%
+     categorias.summary <- self$data %>%
         group_by(categoria_conicet_descripcion, tipo_personal_descripcion) %>%
-        summarize(n = n) %>% arrange(-n)
+        summarize(n = n()) %>% arrange(-n)
 
      #debug
      self.debug <<- self
@@ -161,7 +161,7 @@ CYTARPersonasAnioDownloader <- R6Class("CYTARPersonasAnioDownloader",
        self$personas.year.url[["2017"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/06ae9728-c376-47bd-9c41-fbdca68707c6/resource/ff318872-775a-4403-bff5-a1c5cdeb85ea/download/personas_2017.csv"
        self$personas.year.url[["2018"]] <- "https://datasets.datos.mincyt.gob.ar/dataset/06ae9728-c376-47bd-9c41-fbdca68707c6/resource/7b07fb44-64c3-4902-ab73-f59d4ed8a2f5/download/personas_2018.csv"
      },
-     generatePersonasyear = function(year){
+     generatePersonasYear = function(year){
        ret <- NULL
        year <- as.character(year)
        if (!year %in% names(self$personas.year.url)){

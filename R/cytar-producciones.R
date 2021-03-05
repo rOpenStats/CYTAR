@@ -208,7 +208,7 @@ CYTARProducciones <- R6Class("CYTARProducciones",
                                                                        year = current.year)
       self$producto.autor.years[[current.year]]$loadData()
 
-      self$personas.years[[current.year]] <-personas.anio.downloader$generatePersonasyear(current.year)
+      self$personas.years[[current.year]] <-personas.anio.downloader$generatePersonasYear(current.year)
 
     }
     self$producto.persona.funcion <- CYTARProductoPersonaFuncion$new()

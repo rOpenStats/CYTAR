@@ -18,6 +18,7 @@ kenarab
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{CYTARPersonasAnio$new()}}
+\item \href{#method-configure}{\code{CYTARPersonasAnio$configure()}}
 \item \href{#method-checkConsolidatedFields}{\code{CYTARPersonasAnio$checkConsolidatedFields()}}
 \item \href{#method-consolidate}{\code{CYTARPersonasAnio$consolidate()}}
 \item \href{#method-clone}{\code{CYTARPersonasAnio$clone()}}
@@ -36,6 +37,15 @@ kenarab
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CYTARPersonasAnio$new(year, data.url, disciplinas.ref)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-configure"></a>}}
+\if{latex}{\out{\hypertarget{method-configure}{}}}
+\subsection{Method \code{configure()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CYTARPersonasAnio$configure()}\if{html}{\out{</div>}}
 }
 
 }
