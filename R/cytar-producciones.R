@@ -260,7 +260,7 @@ CYTARProducciones <- R6Class("CYTARProducciones",
          ret <- rbind(ret, productos.personas.year)
        }
      }
-     phase.3.rows <- nrow(productos.personas.selected)
+     phase.3.rows <- nrow(ret)
      if (phase.3.rows < phase.2.rows){
        logger$info("Lost rows when joining personas anio",
                    phase.2 = phase.2.rows, phase.3 = phase.3.rows)
