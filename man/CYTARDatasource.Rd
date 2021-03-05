@@ -16,6 +16,7 @@ kenarab
 \itemize{
 \item \href{#method-new}{\code{CYTARDatasource$new()}}
 \item \href{#method-loadData}{\code{CYTARDatasource$loadData()}}
+\item \href{#method-consolidate}{\code{CYTARDatasource$consolidate()}}
 \item \href{#method-clone}{\code{CYTARDatasource$clone()}}
 }
 }
@@ -34,6 +35,15 @@ kenarab
 \subsection{Method \code{loadData()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CYTARDatasource$loadData()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-consolidate"></a>}}
+\if{latex}{\out{\hypertarget{method-consolidate}{}}}
+\subsection{Method \code{consolidate()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CYTARDatasource$consolidate()}\if{html}{\out{</div>}}
 }
 
 }

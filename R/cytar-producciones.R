@@ -25,17 +25,6 @@ CYTARProductoYear <- R6Class("CYTARProductoYear",
                      )
     self
    },
-   loadData = function(){
-    super$loadData()
-    self$data$palabras_clave <-
-     tolower(self$data$palabras_clave)
-    self$data$titulo         <-
-     tolower(self$data$titulo)
-    self$data$resumen        <-
-     tolower(self$data$resumen)
-    #self$processKeywords()
-    self
-   },
    processKeywords = function(){
     # This approach is not feasible
     logger <- getLogger(self)
@@ -62,6 +51,13 @@ CYTARProductoYear <- R6Class("CYTARProductoYear",
    },
    getProducciones = function(producciones.id){
     self$data %>% filter(producto_id %in% producciones.id)
+   },
+   consolidate = function(){
+     super$loadData()
+     self$data %<>% mutate(titulo = normalizeString(titulo))
+     self$data %<>% mutate(titulo = normalizeString(palabras_clave))
+     self$data %<>% mutate(titulo = normalizeString(resumen))
+     self$data
    }
    ))
 
@@ -90,6 +86,11 @@ CYTARProductoAutorYear <- R6Class("CYTARProductoAutorYear",
 
     )
     self
+   },
+   consolidate = function(){
+     super$loadData()
+     self$data %<>% mutate(alias = normalizeString(alias))
+     self$data
    }
   ))
 
@@ -116,7 +117,12 @@ CYTARProductoPersonaFuncion <- R6Class("CYTARProductoPersonaFuncion",
                      )
     )
     self
+   },
+   consolidate = function(){
+     super$loadData()
+     self$data
    }
+
   ))
 
 
@@ -202,18 +208,17 @@ CYTARProducciones <- R6Class("CYTARProducciones",
       #                                                        col.types = producciones.col.types)
       self$producciones.years[[current.year]] <- CYTARProductoYear$new(data.url = producciones.url,
                                                                              year = current.year)
-      self$producciones.years[[current.year]]$loadData()
+      self$producciones.years[[current.year]]$consolidate()
 
       self$producto.autor.years[[current.year]] <- CYTARProductoAutorYear$new(data.url = producto.autor.url,
                                                                        year = current.year)
-      self$producto.autor.years[[current.year]]$loadData()
+      self$producto.autor.years[[current.year]]$consolidate()
 
       self$personas.years[[current.year]] <-personas.anio.downloader$generatePersonasYear(current.year)
 
     }
     self$producto.persona.funcion <- CYTARProductoPersonaFuncion$new()
-    self$producto.persona.funcion$loadData()
-    self$data
+    self$producto.persona.funcion$consolidate()
    },
    getProduccionesPersonas = function(personas.df, add.persona.info = TRUE){
      logger <- getLogger(self)
@@ -289,17 +294,6 @@ CYTARProducciones <- R6Class("CYTARProducciones",
        #debug
        rows.all.cols <- NULL
        search.fields <- intersect(search.fields, names(producciones.current.year$data))
-       #producciones.current.year$data[, search.fields]
-
-       # for (cc in search.fields){
-       #   logger$debug("Searching in", cc = cc)
-       #   rows.col <- grep(regexp, as.character(producciones.current.year$data[, cc]), ignore.case = TRUE)
-       #   rows.all.cols <- unique(union(rows.all.cols, rows.col))
-       # }
-       #debug
-       #self.debug <<- self
-       #producciones.current.year <<- producciones.current.year
-       #stop("Under construction")
        producciones.detected <- producciones.current.year$data %>%
          filter_at(vars(search.fields),
          any_vars(str_detect(., pattern = regexp, negate=negate))                                           )

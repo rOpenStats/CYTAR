@@ -21,54 +21,14 @@ CYTARPersonas <- R6Class("CYTARPersonas",
                       cvar_ultimo_acceso = col_date(format = "")
                      ))
     self
+  },
+  consolidate = function(){
+     self$configure()
+     self$loadData()
+     self$data
   }))
 
-#' CYTAR
-#' @author kenarab
-#' @importFrom R6 R6Class
-#' @import dplyr
-#' @import magrittr
-#' @import testthat
-#' @export
-#super$initialize(data.url = "https://datasets.datos.mincyt.gob.ar/dataset/06ae9728-c376-47bd-9c41-fbdca68707c6/resource/7b07fb44-64c3-4902-ab73-f59d4ed8a2f5/download/personas_2018.csv",
 
-
-#' CYTARPersonas2018
-#' @author kenarab
-#' @importFrom R6 R6Class
-#' @import dplyr
-#' @import magrittr
-#' @import testthat
-#' @export
-CYTARPersonas2018 <- R6Class("CYTARPersonas2018",
-  inherit = CYTARDatasource,
-  public = list(
-   consolidated = NA,
-   personas = NA,
-   initialize = function(){
-    super$initialize(data.url = "https://datasets.datos.mincyt.gob.ar/dataset/06ae9728-c376-47bd-9c41-fbdca68707c6/resource/7b07fb44-64c3-4902-ab73-f59d4ed8a2f5/download/personas_2018.csv",
-                     data.filename = "personas_2018.csv",
-                     col.types = cols(
-                       .default = col_integer(),
-                       seniority_level = col_character()
-                     ))
-    self
-   },
-   checkConsolidatedFields = function(fields){
-
-   },
-   consolidate = function(){
-     self$personas <- CYTARPersonas$new()
-     self$personas$loadData()
-
-     self$loadData()
-     personas.data <- self$personas$data
-     personas.data %<>% select(persona_id, nombre, apellido, cvar_ultimo_acceso)
-     self$consolidated <- self$data %>% inner_join(personas.data, by = "persona_id")
-     #TODO check sexo and edad
-     self$checkConsolidatedFields(c("sexo_id", "edad"))
-     self$data
-   }))
 
 #' CYTARPersonasAnio
 #' @author kenarab
@@ -80,9 +40,10 @@ CYTARPersonas2018 <- R6Class("CYTARPersonas2018",
 CYTARPersonasAnio <- R6Class("CYTARPersonasAnio",
  inherit = CYTARDatasource,
  public = list(
-   disciplinas.ref = NA,
+   disciplinas.ref       = NA,
    categoria.conicet.ref = NA,
-   tipo.personal.ref = NA,
+   tipo.personal.ref     = NA,
+   categorias.summary    = NA,
    initialize = function(year, data.url, disciplinas.ref){
      url.splitted <- strsplit(data.url, split = "/")[[1]]
      super$initialize(data.url = data.url,
@@ -122,7 +83,8 @@ CYTARPersonasAnio <- R6Class("CYTARPersonasAnio",
      self$data %<>% left_join(self$tipo.personal.ref$data, by = "tipo_personal_id")
      self$data %<>% left_join(self$categoria.conicet.ref$data, by = "categoria_conicet_id")
 
-     categorias.summary <- self$data %>%
+
+     self$categorias.summary <- self$data %>%
         group_by(categoria_conicet_descripcion, tipo_personal_descripcion) %>%
         summarize(n = n()) %>% arrange(-n)
      names(self$data)

@@ -35,4 +35,7 @@ CYTARDatasource <- R6Class("CYTARDatasource",
     self$data <- read_delim(file = data.path, delim = self$delim,
                             col_types = self$col.types)
     self$data
+   },
+   consolidate = function(){
+     stop("Not yet implemented")
    }))

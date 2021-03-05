@@ -26,6 +26,7 @@ CYTARCategoriaConicetRef <- R6Class("CYTARCategoriaConicetRef",
    },
    consolidate = function(){
     self$loadData()
+    self$data %<>% mutate(categoria_conicet_descripcion = normalizeString(categoria_conicet_descripcion))
     self$data
    }))
 
@@ -58,6 +59,8 @@ CYTARTipoPersonalRef <- R6Class("CYTARTipoPersonalRef",
     },
     consolidate = function(){
        self$loadData()
+       self.debug <<- self
+       self$data %<>% mutate(tipo_personal_descripcion = normalizeString(tipo_personal_descripcion))
        self$data
     }))
 
@@ -95,5 +98,8 @@ CYTARDisciplinasRef <- R6Class("CYTARDisciplinasRef",
     },
     consolidate = function(){
        self$loadData()
+       self$data %<>% mutate(gran_area_descripcion = normalizeString(gran_area_descripcion))
+       self$data %<>% mutate(area_descripcion = normalizeString(area_descripcion))
+       self$data %<>% mutate(disciplina_descripcion = normalizeString(disciplina_descripcion))
        self$data
     }))

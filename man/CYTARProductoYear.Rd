@@ -27,6 +27,7 @@ kenarab
 \if{html}{
 \out{<details open ><summary>Inherited methods</summary>}
 \itemize{
+\item \out{<span class="pkg-link" data-pkg="CYTAR" data-topic="CYTARDatasource" data-id="consolidate">}\href{../../CYTAR/html/CYTARDatasource.html#method-consolidate}{\code{CYTAR::CYTARDatasource$consolidate()}}\out{</span>}
 }
 \out{</details>}
 }

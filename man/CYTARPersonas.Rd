@@ -18,6 +18,7 @@ kenarab
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{CYTARPersonas$new()}}
+\item \href{#method-consolidate}{\code{CYTARPersonas$consolidate()}}
 \item \href{#method-clone}{\code{CYTARPersonas$clone()}}
 }
 }
@@ -34,6 +35,15 @@ kenarab
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CYTARPersonas$new()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-consolidate"></a>}}
+\if{latex}{\out{\hypertarget{method-consolidate}{}}}
+\subsection{Method \code{consolidate()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CYTARPersonas$consolidate()}\if{html}{\out{</div>}}
 }
 
 }
