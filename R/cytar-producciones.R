@@ -269,6 +269,7 @@ CYTARProducciones <- R6Class("CYTARProducciones",
        logger$info("Retrieved author information for",
                    personas = phase.3.rows)
      }
+     ret %<>% arrange(persona_id, anio_publica, producto_id)
      ret
    },
    search = function(regexp,
