@@ -66,7 +66,7 @@ getLogger <- function(r6.object){
 #' @export
 removeAccents <- function(text){
   #TODO stuff '
-  ret<-iconv(text, to='ASCII//TRANSLIT')
+  ret<-iconv(text, from = "UTF-8", to='ASCII//TRANSLIT')
   ret<-gsub("'|\\~","",ret)
   ret
 }

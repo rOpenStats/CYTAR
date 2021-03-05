@@ -33,7 +33,10 @@ CYTARDatasource <- R6Class("CYTARDatasource",
      download.file(url = self$data.url, destfile = data.path)
     }
     self$data <- read_delim(file = data.path, delim = self$delim,
-                            col_types = self$col.types)
+                            col_types = self$col.types,
+                            locale = readr::locale(encoding = "utf-8")
+                            #locale = readr::locale(encoding = "ISO-8859-1")
+                            )
     self$data
    },
    consolidate = function(){

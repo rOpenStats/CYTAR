@@ -101,5 +101,6 @@ CYTARDisciplinasRef <- R6Class("CYTARDisciplinasRef",
        self$data %<>% mutate(gran_area_descripcion = normalizeString(gran_area_descripcion))
        self$data %<>% mutate(area_descripcion = normalizeString(area_descripcion))
        self$data %<>% mutate(disciplina_descripcion = normalizeString(disciplina_descripcion))
+       self$data %<>% filter(!is.na(disciplina_id))
        self$data
     }))
