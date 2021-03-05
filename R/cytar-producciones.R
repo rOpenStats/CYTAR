@@ -55,8 +55,8 @@ CYTARProductoYear <- R6Class("CYTARProductoYear",
    consolidate = function(){
      super$loadData()
      self$data %<>% mutate(titulo = normalizeString(titulo))
-     self$data %<>% mutate(titulo = normalizeString(palabras_clave))
-     self$data %<>% mutate(titulo = normalizeString(resumen))
+     self$data %<>% mutate(palabras_clave = normalizeString(palabras_clave))
+     self$data %<>% mutate(resumen = normalizeString(resumen))
      self$data
    }
    ))
